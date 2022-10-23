@@ -1,16 +1,4 @@
 # wow_food_seller
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This App is for Sellers where seller can sell food items online and also update menu of his resturants
+![Screenshot 2022-10-21 214931](https://user-images.githubusercontent.com/92510571/197400221-4073b754-2aff-4a87-a529-1b820bd13d76.jpg)
