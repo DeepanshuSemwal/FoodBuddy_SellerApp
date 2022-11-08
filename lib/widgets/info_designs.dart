@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../models/menus.dart';
+//import '../models/menus.dart';
+import 'package:wow_food_seller/models/menus.dart';
 
 
 
 class InfoDesignWidget extends StatefulWidget
 {
-  Menus? model;
-  BuildContext? context;
+    Menus? model;
+   BuildContext? context;
 
-  InfoDesignWidget({this.model, this.context});
+  InfoDesignWidget({required this.model, required this.context});
 
   @override
   _InfoDesignWidgetState createState() => _InfoDesignWidgetState();
@@ -43,9 +44,9 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
               Text(
                 widget.model!.menuTitle!,
                 style: const TextStyle(
-                  color: Colors.cyan,
+                  color: Colors.redAccent,
                   fontSize: 20,
-                  fontFamily: "Train",
+                 // fontFamily: "dancingScript",
                 ),
               ),
               Text(

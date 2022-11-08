@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart%20';
+//import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wow_food_seller/global/global.dart';
 import 'package:wow_food_seller/widgets/alert_dialog.dart';
 import 'package:wow_food_seller/widgets/progress_bar.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 
 
@@ -336,10 +336,10 @@ class _UploadScreenState extends State<UploadScreen> {
                 }
             );
             //upload image
-           // String downloadUrl=await uploadImage(File(imageXFile!.path));
+            String downloadUrl=await uploadImage(File(imageXFile!.path));
 
           // save info to firebase
-           //safeInfo(downloadUrl);
+           safeInfo(downloadUrl);
 
 
 
@@ -369,7 +369,7 @@ class _UploadScreenState extends State<UploadScreen> {
       }
   }
 
-  Future uploadImage(mImageFile) async
+   uploadImage(mImageFile) async
   {
 
     try
@@ -378,7 +378,7 @@ class _UploadScreenState extends State<UploadScreen> {
           Reference reference =FirebaseStorage
               .instance
               .ref()
-              .child("menus");
+              .child("menu");
           UploadTask uploadTask = reference.child(uniqueIdName + ".jpg").putFile(mImageFile) ;
 
          // reference.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {}) ;

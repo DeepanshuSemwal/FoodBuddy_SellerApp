@@ -3,39 +3,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Menus
 {
   String? menuID;
-  String? sellerUID;
+  String? sellersId;
   String? menuTitle;
   String? menuInfo;
-  Timestamp? publishedDate;
+  Timestamp? published;
   String? thumbnail;
   String? status;
 
  Menus({
     this.menuID,
-   this.sellerUID,
+   this.sellersId,
    this.menuTitle,
    this.menuInfo,
-   this.publishedDate,
+   this.published,
    this.thumbnail,
    this.status
 });
  Menus.fromJson(Map<String,dynamic> json)
  {
-   menuID=json["menuID"];
-   sellerUID=json["sellerUID"];
+   menuID=json["menuId"];
+   sellersId=json["sellersId"];
    menuTitle=json["menuTitle"];
    menuInfo=json["menuInfo"];
-   publishedDate=json["thumbnailUrl"];
+   published=json["published"];
    status=json["status"];
+   thumbnail=json["thumbnail"];
  }
  Map<String,dynamic> toJson()
  {
    final Map<String,dynamic> data=Map<String,dynamic>();
    data["menuID"]=menuID;
-   data["sellerId"]=sellerUID;
+   data["sellerId"]=sellersId;
    data["menuTitle"]=menuTitle;
    data["menuInfo"]=menuInfo;
-   data["publishedData"]=publishedDate;
+   data["publishedDate"]=published;
+   data["thumbnailUrl"]=thumbnail;
    data["status"]=status;
    return data;
  }
