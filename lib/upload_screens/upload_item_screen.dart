@@ -7,18 +7,21 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wow_food_seller/global/global.dart';
 import 'package:wow_food_seller/widgets/alert_dialog.dart';
 import 'package:wow_food_seller/widgets/progress_bar.dart';
+
+import '../models/menus.dart';
 //import 'package:firebase_storage/firebase_storage.dart';
 
 
 
-class UploadScreenMenu extends StatefulWidget {
-  const UploadScreenMenu({Key? key}) : super(key: key);
+class ItemUploadScreen extends StatefulWidget {
+final Menus? model;
+ItemUploadScreen({required this.model});
 
   @override
-  State<UploadScreenMenu> createState() => _UploadScreenMenuState();
+  State<ItemUploadScreen> createState() => _ItemUploadScreenState();
 }
 
-class _UploadScreenMenuState extends State<UploadScreenMenu> {
+class _ItemUploadScreenState extends State<ItemUploadScreen> {
 
   XFile ?imageXFile;
   final ImagePicker _imagePicker=ImagePicker();
@@ -46,51 +49,51 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
               ),
 
             ),
-           children: [
+            children: [
 
-             SimpleDialogOption(
-               child: Text("Capture image from camera",
-                 style: TextStyle(color: Colors.red,
-                   fontWeight: FontWeight.bold,
-                 ),
+              SimpleDialogOption(
+                child: Text("Capture image from camera",
+                  style: TextStyle(color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
 
-               ),
-               onPressed: ()
-               {
+                ),
+                onPressed: ()
+                {
 
-                       CaptureImageFromCamera();
+                  CaptureImageFromCamera();
 
-               },
-             ),
+                },
+              ),
 
-             SimpleDialogOption(
-               child: Text("Take image from gallery",
-                 style: TextStyle(color: Colors.red,
-                   fontWeight: FontWeight.bold,
-                 ),
-               ),
-               onPressed: ()
-               {
-                   TakeImageFromGallery();
+              SimpleDialogOption(
+                child: Text("Take image from gallery",
+                  style: TextStyle(color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: ()
+                {
+                  TakeImageFromGallery();
 
-               },
-             ),
+                },
+              ),
 
 
-             SimpleDialogOption(
-               child: Text("Cancel",
-                 style: TextStyle(color: Colors.red,
-                   fontWeight: FontWeight.bold,
-                 ),
-               ),
-               onPressed: ()
-               {
-                 Navigator.pop(context);
+              SimpleDialogOption(
+                child: Text("Cancel",
+                  style: TextStyle(color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: ()
+                {
+                  Navigator.pop(context);
 
-               },
-             ),
+                },
+              ),
 
-           ],
+            ],
 
           );
         }
@@ -159,25 +162,25 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
         ),
         actions: [
           TextButton(
-              onPressed: ()
-        {
+            onPressed: ()
+            {
 
-                uploading ?null:uploadingValidateForm();
-        },
-              child: Text("Add",
+              uploading ?null:uploadingValidateForm();
+            },
+            child: Text("Add",
               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
-              ),
+            ),
 
-      ),
+          ),
         ],
 
       ),
       body: ListView(
         children: [
 
-         Container(
-          child: uploading==true?linearProgressBar():Text(""),
-         ),
+          Container(
+            child: uploading==true?linearProgressBar():Text(""),
+          ),
 
           Container(
             height: 230,
@@ -224,7 +227,7 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
               thickness: 2,
             ),
           ),
-           ListTile(
+          ListTile(
             leading: Icon(Icons.perm_device_info_outlined,color: Colors.black,),
             title: Container(
               width: 255,
@@ -253,7 +256,7 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Add New Menu",
+        title: Text("Add New Item",
           style: TextStyle(
             fontFamily: "DancingScript-Bold",
             color: Colors.white,
@@ -326,77 +329,77 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
   uploadingValidateForm()async
   {
     if(imageXFile!=null)
+    {
+      if(menuInfoController.text.isNotEmpty && titleEditingController.text.isNotEmpty)
       {
-        if(menuInfoController.text.isNotEmpty && titleEditingController.text.isNotEmpty)
-          {
-            setState(
-                    ()
-                {
-                  uploading=true;
-                }
-            );
-            //upload image
-            String downloadUrl=await uploadImage(File(imageXFile!.path));
+        setState(
+                ()
+            {
+              uploading=true;
+            }
+        );
+        //upload image
+        String downloadUrl=await uploadImage(File(imageXFile!.path));
 
-          // save info to firebase
-           safeInfo(downloadUrl);
+        // save info to firebase
+        safeInfo(downloadUrl);
 
 
-
-          }
-        else
-          {
-            showDialog(context: context,
-                builder: (c)
-                {
-                  return ErrorDialog(message: "Please write title and information for menu");
-                }
-
-            );
-
-          }
 
       }
+      else
+      {
+        showDialog(context: context,
+            builder: (c)
+            {
+              return ErrorDialog(message: "Please write title and information for menu");
+            }
+
+        );
+
+      }
+
+    }
     else
-      {
-            showDialog(context: context,
-                builder: (c)
-                {
-                  return ErrorDialog(message: "Please Select an image for menu");
-                }
+    {
+      showDialog(context: context,
+          builder: (c)
+          {
+            return ErrorDialog(message: "Please Select an image for menu");
+          }
 
-            );
-      }
+      );
+    }
   }
 
-   uploadImage(mImageFile) async
+  uploadImage(mImageFile) async
   {
 
     try
-        {
-                // menus folder has been created
-          Reference reference =FirebaseStorage
-              .instance
-              .ref()
-              .child("menu");
-          UploadTask uploadTask = reference.child(uniqueIdName + ".jpg").putFile(mImageFile) ;
+    {
+      // menus folder has been created
+      Reference reference =FirebaseStorage
+          .instance
+          .ref()
+          .child("menu");
+      UploadTask uploadTask = reference.child(uniqueIdName + ".jpg").putFile(mImageFile) ;
 
-         // reference.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {}) ;
+      // reference.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {}) ;
 
-          // String downloadURL = await taskSnapshot.ref.getDownloadURL();
+      // String downloadURL = await taskSnapshot.ref.getDownloadURL();
 
-           final UploadTask task = reference.putFile(mImageFile);
+      final UploadTask task = reference.putFile(mImageFile);
 
-         // var downloadURL = await (await task.onComplete).ref.getDownloadURL();
-        var downloadURL =  await (await uploadTask).ref.getDownloadURL();
-
-
+      // var downloadURL = await (await task.onComplete).ref.getDownloadURL();
+      var downloadURL =  await (await uploadTask).ref.getDownloadURL();
 
 
-          return downloadURL;
 
-        }
-        catch(error)
+
+      return downloadURL;
+
+    }
+    catch(error)
     {
       print(error);
     }
@@ -406,38 +409,38 @@ class _UploadScreenMenuState extends State<UploadScreenMenu> {
 
 
 
-safeInfo(String downloadUrl)
-{
-  final ref=FirebaseFirestore.instance.collection("sellers")
-      .doc(sharedPreferences!.getString("uid"))
-      .collection("menu");
-  ref.doc(uniqueIdName).set({
+  safeInfo(String downloadUrl)
+  {
+    final ref=FirebaseFirestore.instance.collection("sellers")
+        .doc(sharedPreferences!.getString("uid"))
+        .collection("menu");
+    ref.doc(uniqueIdName).set({
 
-    "menuId":uniqueIdName,
-    "sellersId": sharedPreferences!.getString("uid"),
-    "menuTitle": titleEditingController.text.toString(),
-    "menuInfo": menuInfoController.text.toString(),
-    "published":DateTime.now(),
-    "status": "available",
-    "thumbnail":downloadUrl,
+      "menuId":uniqueIdName,
+      "sellersId": sharedPreferences!.getString("uid"),
+      "menuTitle": titleEditingController.text.toString(),
+      "menuInfo": menuInfoController.text.toString(),
+      "published":DateTime.now(),
+      "status": "available",
+      "thumbnail":downloadUrl,
 
-  });
-  clearMenuUploadingForm();
-  setState(() {
-    uniqueIdName=DateTime.now().toString();
-    uploading=false;
+    });
+    clearMenuUploadingForm();
+    setState(() {
+      uniqueIdName=DateTime.now().toString();
+      uploading=false;
 
-  });
+    });
 
 
-}
+  }
   clearMenuUploadingForm()
   {
-      setState(() {
-        menuInfoController.clear();
-        titleEditingController.clear();
-        imageXFile=null;
-      });
+    setState(() {
+      menuInfoController.clear();
+      titleEditingController.clear();
+      imageXFile=null;
+    });
   }
 
 

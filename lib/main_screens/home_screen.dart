@@ -9,6 +9,7 @@ import 'package:wow_food_seller/widgets/custum_drawer.dart';
 import 'package:wow_food_seller/widgets/info_designs.dart';
 //import '../widgets/progress_bar.dart';
 import 'package:wow_food_seller/widgets/progress_bar.dart';
+import 'package:wow_food_seller/widgets/text_widget_header.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -43,7 +44,7 @@ class HomeScreen extends StatelessWidget {
 
               onPressed: ()
               {
-                  Navigator.push(context,MaterialPageRoute(builder: (c)=>UploadScreen()));
+                  Navigator.push(context,MaterialPageRoute(builder: (c)=>UploadScreenMenu()));
               },
 
           ),
@@ -54,22 +55,7 @@ class HomeScreen extends StatelessWidget {
       body: CustomScrollView(
 
         slivers: [
-
-          SliverToBoxAdapter(
-
-            child: ListTile(
-              title: Text("Menu",
-              textAlign: TextAlign.center,
-                style: TextStyle(
-                  letterSpacing: 2,
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "DancingScript-Bold.ttf",
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
+          SliverPersistentHeader(pinned:true,delegate: TextWidgetHeader(title: "My Menus")),
 
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menu").snapshots(),

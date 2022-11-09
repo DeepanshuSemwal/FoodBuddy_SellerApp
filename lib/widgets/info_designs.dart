@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wow_food_seller/main_screens/items_screen.dart';
 
 //import '../models/menus.dart';
 import 'package:wow_food_seller/models/menus.dart';
@@ -22,6 +23,10 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: ()
+      {
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>ItemsScreen(model: widget.model,)));
+      },
       splashColor: Colors.amber,
       child: Padding(
         padding: const EdgeInsets.all(5.0),
