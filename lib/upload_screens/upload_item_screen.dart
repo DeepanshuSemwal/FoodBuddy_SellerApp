@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wow_food_seller/global/global.dart';
+import 'package:wow_food_seller/main_screens/home_screen.dart';
 import 'package:wow_food_seller/widgets/alert_dialog.dart';
 import 'package:wow_food_seller/widgets/progress_bar.dart';
 
@@ -27,13 +28,15 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
   final ImagePicker _imagePicker=ImagePicker();
   TextEditingController menuInfoController=TextEditingController();
   TextEditingController titleEditingController=TextEditingController();
+  TextEditingController descriptionEditingController=TextEditingController();
+  TextEditingController priceEditingController=TextEditingController();
   bool uploading=false;
   String uniqueIdName=DateTime.now().microsecondsSinceEpoch.toString();
 
   @override
   Widget build(BuildContext context) {
 
-    return imageXFile==null?selectMenuScreen():MenuUploadScreen();
+    return imageXFile==null?selectMenuScreen():ItemUploadScreen();
   }
 
   takeImage(context)
@@ -124,12 +127,12 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
     });
   }
 
-  MenuUploadScreen()
+  ItemUploadScreen()
   {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Upload Menu",
+        title: Text("Upload Item",
           style: TextStyle(
             fontFamily: "DancingScript-Bold",
             color: Colors.white,
@@ -156,7 +159,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
 
           onPressed: ()
           {
-
+            Navigator.push(context,MaterialPageRoute(builder: (c)=>HomeScreen()));
           },
 
         ),
@@ -242,6 +245,51 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(top: 10,left: 10,right: 10),
+            child: Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.description_outlined,color: Colors.black,),
+            title: Container(
+              width: 255,
+              child: TextField(
+                style: TextStyle(color: Colors.black),
+                controller: descriptionEditingController,
+                decoration: InputDecoration(
+                  hintText: "Description",
+                  hintStyle: TextStyle(color: Colors.black),
+
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10,left: 10,right: 10),
+            child: Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.perm_device_info_outlined,color: Colors.black,),
+            title: Container(
+              width: 255,
+              child: TextField(
+                style: TextStyle(color: Colors.black),
+                controller: priceEditingController,
+                decoration: InputDecoration(
+                  hintText: "Price",
+                  hintStyle: TextStyle(color: Colors.black),
+
+                ),
+              ),
+            ),
+          ),
+
 
         ],
       ),
@@ -313,7 +361,6 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-
 
                 ),
               ),
