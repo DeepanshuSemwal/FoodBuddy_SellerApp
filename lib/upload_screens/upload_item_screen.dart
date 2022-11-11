@@ -26,7 +26,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
 
   XFile ?imageXFile;
   final ImagePicker _imagePicker=ImagePicker();
-  TextEditingController menuInfoController=TextEditingController();
+  TextEditingController itemInfoController=TextEditingController();
   TextEditingController titleEditingController=TextEditingController();
   TextEditingController descriptionEditingController=TextEditingController();
   TextEditingController priceEditingController=TextEditingController();
@@ -132,7 +132,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Upload Item",
+        title: Text("Upload New Item",
           style: TextStyle(
             fontFamily: "DancingScript-Bold",
             color: Colors.white,
@@ -236,7 +236,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
               width: 255,
               child: TextField(
                 style: TextStyle(color: Colors.black),
-                controller: menuInfoController,
+                controller: itemInfoController,
                 decoration: InputDecoration(
                   hintText: "Menu Info",
                   hintStyle: TextStyle(color: Colors.black),
@@ -346,7 +346,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
                   takeImage(context);
 
                 },
-                child: Text("Add New Menu",
+                child: Text("Add New Item",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -377,7 +377,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
   {
     if(imageXFile!=null)
     {
-      if(menuInfoController.text.isNotEmpty && titleEditingController.text.isNotEmpty)
+      if(itemInfoController.text.isNotEmpty && titleEditingController.text.isNotEmpty && descriptionEditingController.text.isNotEmpty && priceEditingController.text.isNotEmpty)
       {
         setState(
                 ()
@@ -399,7 +399,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
         showDialog(context: context,
             builder: (c)
             {
-              return ErrorDialog(message: "Please write title and information for menu");
+              return ErrorDialog(message: "Please write title and information for item");
             }
 
         );
@@ -412,7 +412,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
       showDialog(context: context,
           builder: (c)
           {
-            return ErrorDialog(message: "Please Select an image for menu");
+            return ErrorDialog(message: "Please Select an image for item");
           }
 
       );
@@ -428,7 +428,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
       Reference reference =FirebaseStorage
           .instance
           .ref()
-          .child("menu");
+          .child("items");
       UploadTask uploadTask = reference.child(uniqueIdName + ".jpg").putFile(mImageFile) ;
 
       // reference.TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {}) ;
@@ -460,40 +460,58 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
   {
     final ref=FirebaseFirestore.instance.collection("sellers")
         .doc(sharedPreferences!.getString("uid"))
-        .collection("menu");
+        .collection("menu").doc(widget.model!.menuID).collection("items");
     ref.doc(uniqueIdName).set({
 
-      "menuId":uniqueIdName,
+      "itemId":uniqueIdName,
       "sellersId": sharedPreferences!.getString("uid"),
-      "menuTitle": titleEditingController.text.toString(),
-      "menuInfo": menuInfoController.text.toString(),
+      "sellerName": sharedPreferences!.getString("name"),
+      "itemTitle": titleEditingController.text.toString(),
+      "itemInfo": itemInfoController.text.toString(),
+      "itemDescription":descriptionEditingController.toString(),
+      "price": int.parse(priceEditingController.text),
       "published":DateTime.now(),
       "status": "available",
       "thumbnail":downloadUrl,
 
-    });
-    clearMenuUploadingForm();
-    setState(() {
-      uniqueIdName=DateTime.now().toString();
-      uploading=false;
+    }).then((value) {
+      final itemRef=FirebaseFirestore.instance.collection("items");
+      itemRef.doc(uniqueIdName).set({
+        "itemId":uniqueIdName,
+        "sellersId": sharedPreferences!.getString("uid"),
+        "sellerName": sharedPreferences!.getString("name"),
+        "itemTitle": titleEditingController.text.toString(),
+        "itemInfo": itemInfoController.text.toString(),
+        "itemDescription":descriptionEditingController.toString(),
+        "price": int.parse(priceEditingController.text),
+        "published":DateTime.now(),
+        "status": "available",
+        "thumbnail":downloadUrl,
 
-    });
+      });
 
+
+    }).then((value) {
+
+      clearMenuUploadingForm();
+      setState(() {
+        uniqueIdName=DateTime.now().toString();
+        uploading=false;
+
+      });
+    });
 
   }
   clearMenuUploadingForm()
   {
     setState(() {
-      menuInfoController.clear();
+      itemInfoController.clear();
       titleEditingController.clear();
+      descriptionEditingController.clear();
+      priceEditingController.clear();
       imageXFile=null;
     });
   }
-
-
-
-
-
 
 }
 
