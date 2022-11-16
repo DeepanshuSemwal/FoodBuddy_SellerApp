@@ -36,8 +36,8 @@ class Menus
    data["sellerId"]=sellersId;
    data["menuTitle"]=menuTitle;
    data["menuInfo"]=menuInfo;
-   data["publishedDate"]=published;
-   data["thumbnailUrl"]=thumbnail;
+   data["published"]=published;
+   data["thumbnail"]=thumbnail;
    data["status"]=status;
    return data;
  }

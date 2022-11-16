@@ -8,8 +8,8 @@ import 'package:wow_food_seller/models/menus.dart';
 
 class InfoDesignWidget extends StatefulWidget
 {
-    Menus? model;
-   BuildContext? context;
+  Menus? model;
+  BuildContext? context;
 
   InfoDesignWidget({required this.model, required this.context});
 
@@ -51,7 +51,7 @@ class _InfoDesignWidgetState extends State<InfoDesignWidget> {
                 style: const TextStyle(
                   color: Colors.redAccent,
                   fontSize: 20,
-                 // fontFamily: "dancingScript",
+                  // fontFamily: "dancingScript",
                 ),
               ),
               Text(

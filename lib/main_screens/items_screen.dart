@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wow_food_seller/upload_screens/upload_item_screen.dart';
+import 'package:wow_food_seller/upload_screens/upload_item_screen_itemScreen.dart';
+import 'package:wow_food_seller/widgets/info_designs.dart';
 import 'package:wow_food_seller/widgets/item_design.dart';
 import 'package:wow_food_seller/widgets/text_widget_header.dart';
 
@@ -48,7 +50,9 @@ class _ItemsScreenState extends State<ItemsScreen> {
 
             onPressed: ()
             {
-              Navigator.push(context,MaterialPageRoute(builder: (c)=>ItemUploadScreen(model: widget.model),));
+             // Navigator.push(context,MaterialPageRoute(builder: (c)=>ItemUploadScreen_itemScreen(model: widget.model),));
+              //Navigator.push(context,MaterialPageRoute(builder: (c)=>UploadScreenMenu(model: widget.model)) );
+              Navigator.push(context, MaterialPageRoute(builder: (c)=>ItemsScreen(model: widget.model)));
             },
 
           ),
@@ -59,7 +63,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
         slivers: [
           SliverPersistentHeader(delegate: TextWidgetHeader(title: widget.model!.menuTitle.toString() + " Items")),
           StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menu").doc(widget.model!.menuID).collection("items").snapshots(),
+            stream: FirebaseFirestore.instance.collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menu").doc(widget.model!.menuID).collection("items").orderBy("published").snapshots(),
             builder: (context,snapshot)
             {
               return !snapshot.hasData?
@@ -72,9 +76,12 @@ class _ItemsScreenState extends State<ItemsScreen> {
                 itemBuilder: (context,index)
                 {
                   Items model=Items.fromJson(
-                    snapshot.data!.docs[index].data()! as Map<String,dynamic>,
+                    snapshot.data!.docs[index].data()! as Map<String,dynamic>
                   );
+
                   return ItemDesignWidget(model: model, context: context);
+
+
 
                 },
                 itemCount: snapshot.data!.docs.length,

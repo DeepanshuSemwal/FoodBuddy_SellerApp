@@ -15,16 +15,16 @@ import '../models/menus.dart';
 
 
 
-class ItemUploadScreen extends StatefulWidget {
+class ItemUploadScreen_itemScreen extends StatefulWidget {
 
-final Menus? model;
-ItemUploadScreen({required this.model});
+  final Items? model;
+  ItemUploadScreen_itemScreen({required this.model});
 
   @override
-  State<ItemUploadScreen> createState() => _ItemUploadScreenState();
+  State<ItemUploadScreen_itemScreen> createState() => _ItemUploadScreen_itemScreenState();
 }
 
-class _ItemUploadScreenState extends State<ItemUploadScreen> {
+class _ItemUploadScreen_itemScreenState extends State<ItemUploadScreen_itemScreen> {
 
   XFile ?imageXFile;
   final ImagePicker _imagePicker=ImagePicker();
@@ -462,7 +462,7 @@ class _ItemUploadScreenState extends State<ItemUploadScreen> {
   {
     final ref=FirebaseFirestore.instance.collection("sellers")
         .doc(sharedPreferences!.getString("uid"))
-        .collection("menu").doc(widget.model!.menuID).collection("items");
+        .collection("menu").doc(widget.model!.itemId).collection("items");
     ref.doc(uniqueIdName).set({
 
       "itemId":uniqueIdName,

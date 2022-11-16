@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           SliverPersistentHeader(pinned:true,delegate: TextWidgetHeader(title: "My Menus")),
 
           StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menu").snapshots(),
+            stream: FirebaseFirestore.instance.collection("sellers").doc(sharedPreferences!.getString("uid")).collection("menu").orderBy("published",descending: true).snapshots(),
             builder: (context,snapshot)
             {
               return !snapshot.hasData?

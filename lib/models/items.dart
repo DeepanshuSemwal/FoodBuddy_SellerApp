@@ -1,53 +1,60 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Items
 {
-  String?itemDescriptions;
+  String?itemDescription;
   String?itemId;
   String?itemInfo;
   String?itemTitle;
   int?price;
-  String?published;
+  Timestamp?published;
   String?sellerName;
-  String?sellerId;
+  String?sellersId;
+  String?status;
   String?thumbnail;
-  Items({
-
-   this.itemDescriptions,
+  Items(
+  {
+    this.itemDescription,
     this.itemId,
     this.itemInfo,
-   this.itemTitle,
+    this.itemTitle,
     this.price,
     this.published,
     this.sellerName,
-    this.sellerId,
-    this.thumbnail
-});
+    this.sellersId,
+    this.status,
+    this.thumbnail,
+
+}
+);
 
   Items.fromJson(Map<String,dynamic> json)
   {
     final Map<String,dynamic>data=Map<String,dynamic>();
-    itemDescriptions=data["itemDescription"];
-    itemId=data["itemId"];
-    itemInfo=data["itemInfo"];
-    itemTitle=data["itemTitle"];
-    price=data["price"];
-    published=data["published"];
-    sellerName=data["sellerName"];
-    sellerId=data["sellerId"];
-    thumbnail=data["thumbnail"];
+    itemDescription=json["itemDescription"];
+    itemId=json["itemId"];
+    itemInfo=json["itemInfo"];
+    itemTitle=json["itemTitle"];
+    price=json["price"];
+    published=json["published"];
+    sellerName=json["sellerName"];
+    sellersId=json["sellersId"];
+    thumbnail=json["thumbnail"];
 
   }
   Map<String,dynamic> toJson()
   {
-    final Map<String,dynamic> data=new Map<String,dynamic>();
-    data["itemDescription"]=itemDescriptions;
+    final Map<String,dynamic> data=Map<String,dynamic>();
+    data["itemDescription"]=itemDescription;
     data["itemId"]=itemId;
     data["itemInfo"]=itemInfo;
     data["itemTitle"]=itemTitle;
     data["price"]=price;
     data["published"]=published;
     data["sellerName"]=sellerName;
-    data["sellerId"]=sellerId;
+    data["sellersId"]=sellersId;
    data["thumbnail"]= thumbnail;
+   data["status"]=status;
     return data;
 
   }
