@@ -12,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wow_food_seller/main_screens/home_screen.dart';
 import 'package:wow_food_seller/widgets/custom_text_field.dart';
-import 'package:toast/toast.dart';
 import 'package:firebase_storage/firebase_storage.dart ' as fStorage;
 
 import '../global/global.dart';
