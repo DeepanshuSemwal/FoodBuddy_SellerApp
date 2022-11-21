@@ -95,6 +95,12 @@ flutter:
      - family: Oswald
        fonts:
          - asset: assets/fonts/Oswald-Bold.ttf
-        # - asset: fonts/TrajanPro_Bold.ttf
+
+     - family: Lobster
+       fonts:
+           - asset: assets/fonts/Lobster-Regular.ttf
+
+
+
 
 

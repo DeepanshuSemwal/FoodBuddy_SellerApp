@@ -3,6 +3,7 @@ import 'package:wow_food_seller/main_screens/items_screen.dart';
 import 'package:wow_food_seller/models/items.dart';
 import 'package:wow_food_seller/upload_screens/upload_item_screen.dart';
 import 'package:wow_food_seller/upload_screens/upload_item_screen_itemScreen.dart';
+import 'package:wow_food_seller/widgets/item_detail_screen.dart';
 import '../models/menus.dart';
 import 'package:wow_food_seller/models/menus.dart';
 
@@ -27,7 +28,9 @@ class _ItemDesignWidgetState extends State<ItemDesignWidget> {
     return InkWell(
       onTap: ()
       {
-        Navigator.push(context, MaterialPageRoute(builder: (c)=>ItemUploadScreen_itemScreen(model: widget.model)));
+        // Navigator.push(context, MaterialPageRoute(builder: (c)=>ItemUploadScreen_itemScreen(model: widget.model)));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>ItemDetailsScreen(model: widget.model,)));
+
 
       },
       splashColor: Colors.red,
