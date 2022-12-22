@@ -80,7 +80,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "€  " + dataMap["totalAmount"].toString(),
+                        " ₹  " + dataMap["totalAmount"].toString(),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen>
                   const Divider(thickness: 4,),
                   FutureBuilder<DocumentSnapshot>(
                     future: FirebaseFirestore.instance
-                        .collection("users")
+                        .collection("customer")
                         .doc(orderByUser)
                         .collection("customerAddress")
                         .doc(dataMap["addressID"])

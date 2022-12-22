@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wow_food_seller/main_screens/home_screen.dart';
+import 'package:wow_food_seller/main_screens/seller_earning_screen.dart';
 
 
 import '../authentication/auth_screen.dart';
@@ -82,6 +83,7 @@ class CustumDrawer extends StatelessWidget {
                         ),
                         onTap: ()
                         {
+                          Navigator.push(context, MaterialPageRoute(builder: (c)=>SellerEarningScreen()));
 
                         },
                       ),
