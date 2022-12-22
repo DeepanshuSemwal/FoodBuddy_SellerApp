@@ -72,6 +72,8 @@ flutter:
   assets:
      - images/slash_image.jpg
      - images/login_image1.jpg
+     - images/food_delivered.png
+     - images/food_delivery_stages.png
 
 
 
@@ -99,6 +101,10 @@ flutter:
      - family: Lobster
        fonts:
            - asset: assets/fonts/Lobster-Regular.ttf
+
+     - family: Cookie
+       fonts:
+         - asset: assets/fonts/Cookie-Regular.ttf
 
 
 

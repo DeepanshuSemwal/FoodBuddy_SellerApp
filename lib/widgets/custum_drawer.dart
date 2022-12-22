@@ -5,6 +5,7 @@ import 'package:wow_food_seller/main_screens/home_screen.dart';
 
 import '../authentication/auth_screen.dart';
 import '../global/global.dart';
+import '../main_screens/new_orders.dart';
 
 
 class CustumDrawer extends StatelessWidget {
@@ -103,6 +104,7 @@ class CustumDrawer extends StatelessWidget {
                         ),
                         onTap: ()
                         {
+                          Navigator.push(context, MaterialPageRoute(builder: (c)=>NewOrdersScreen()));
 
                         },
                       ),
